@@ -8,7 +8,7 @@ module.exports = {
         if (error) {
           console.log(error);
         } else {
-          res.send(JSON.stringify(results));
+          res.json(results);
         }
       })
       
@@ -19,7 +19,7 @@ module.exports = {
         if (error) {
           console.log(error)
         } else {
-          res.send('post success');
+          res.send('added message!');
         }
       })
     } 
@@ -28,12 +28,22 @@ module.exports = {
   users: {
     // Ditto as above
     get: function (req, res) {
-      models.users.get()
-      res.send(JSON.stringify(users))
+      models.users.get((error,results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          res.json(results);
+        }
+      })
     },
     post: function (req, res) {
-      models.users.post('INSERT INTO users')
-      res.end('post success')
+      models.users.post(req.body, (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          res.send('added user!')
+        }
+      })
     }
   }
 };

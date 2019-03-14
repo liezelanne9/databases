@@ -13,12 +13,11 @@ module.exports = {
       }); // make query to database
     }, 
     post: function (body, cb) {
-      db.query(`INSERT INTO messages (id, message, room, user_id) VALUES (1, ?, ?, 5)`, [body.message, body.roomname],function (error, results) {
+      db.query(`INSERT INTO messages (username, message, roomname) VALUES (?,?, ?)`, [body.username, body.message, body.roomname],function (error, results) {
         if (error) {
           cb(error);
         } else {
-          console.log('sucess: ', body.message);
-          console.log(results);
+          console.log('added message: ', body.message);
           cb(null, results);
         }
       })
@@ -27,8 +26,25 @@ module.exports = {
 
   users: {
     // Ditto as above.
-    get: function () {},
-    post: function () {}
+    get: function (cb) {
+      db.query('SELECT * from users', function(error, results){
+        if(error) {
+          cb(error);
+        } else {
+          cb(null, results);
+        }
+      })
+    },
+    post: function (body, cb) {
+      db.query('INSERT INTO users (username) VALUES (?)', [body.username], function(error, results) {
+        if (error) {
+          cb(error);
+        } else {
+          console.log('added user: ', body.username);
+          cb(null, results);
+        }
+      })
+    }
   }
 };
 
