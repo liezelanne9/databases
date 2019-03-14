@@ -5,14 +5,13 @@ var mysql = require('mysql');
 // and to the database "chat".
 
 
-const con = mysql.createConnection({
-  host: `localhost`, 
-  port: 3306,
+const connection = mysql.createConnection({
   user: 'student',
-  password: 'student'
+  password: 'student',
+  database: 'chat'
 });
 
-con.connect((err) => {
+connection.connect((err) => {
   if(err){
     console.log('Error connecting to Db', err);
     return;
@@ -20,13 +19,6 @@ con.connect((err) => {
   console.log('Connection established');
 });
 
-
-
-
-
-
-
-
-
+module.exports = connection
 
 //port: 3306
